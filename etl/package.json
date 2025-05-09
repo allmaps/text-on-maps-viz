@@ -1,0 +1,40 @@
+{
+  "name": "text-on-map-viz-etl",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "ocr-annotations": "node --no-warnings=ExperimentalWarning --experimental-strip-types ./src/ocr-annotations.ts",
+    "georeference-anotations": "node --no-warnings=ExperimentalWarning --experimental-strip-types ./src/georeference-annotations.ts",
+    "geojson": "node --no-warnings=ExperimentalWarning --experimental-strip-types ./src/geojson.ts",
+    "filter-geojson-by-layer": "node --no-warnings=ExperimentalWarning --experimental-strip-types ./src/filter-geojson-by-layer.ts",
+    "create-tippecanoe-script": "node --no-warnings=ExperimentalWarning --experimental-strip-types ./src/create-tippecanoe-script.ts > ./scripts/tippecanoe.sh"
+  },
+  "keywords": [],
+  "author": "Bert Spaan",
+  "license": "ISC",
+  "packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39",
+  "private": true,
+  "devDependencies": {
+    "@allmaps/types": "1.0.0-beta.15",
+    "@types/highland": "^2.13.0",
+    "@types/ndjson": "^2.0.4",
+    "@types/unzipper": "^0.10.11"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@allmaps/annotation": "^1.0.0-beta.32",
+    "@allmaps/transform": "^1.0.0-beta.43",
+    "@turf/area": "^7.2.0",
+    "@turf/boolean-intersects": "^7.2.0",
+    "@turf/center-of-mass": "^7.2.0",
+    "@turf/intersect": "^7.2.0",
+    "@turf/simplify": "^7.2.0",
+    "can-ndjson-stream": "^1.0.2",
+    "js-sha1": "^0.7.0",
+    "ndjson": "^2.0.0",
+    "unzipper": "^0.12.3"
+  }
+}
