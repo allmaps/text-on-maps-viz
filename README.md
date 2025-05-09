@@ -31,10 +31,11 @@ Software:
 
 - Node.js v23.1.0 or higher
 - pnpm v10.10.0 or higher
+- [Tippecanoe](https://github.com/felt/tippecanoe)
 
 Required input data:
 
-- `./data/input/rumsey_57k_english.zip` (**warning**: This is 51 GB file!)
+- `./data/input/rumsey_57k_english.zip` (**warning**: This is a 51 GB file!)
 - `./data/input/maps.ndjson`, produced by https://github.com/allmaps/rumsey-scripts.
 
 See the [`etl`](etl) directory for more details.
