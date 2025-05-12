@@ -1,11 +1,10 @@
-import { Transform, type TransformCallback } from 'node:stream'
+import { pipeline, Transform, type TransformCallback } from 'node:stream'
 
 import ndjson from 'ndjson'
 
 import turfCenterOfMass from '@turf/center-of-mass'
 import turfArea from '@turf/area'
 import turfBooleanIntersects from '@turf/boolean-intersects'
-import turfSimplify from '@turf/simplify'
 
 import { validateGeoreferencedMap } from '@allmaps/annotation'
 import { GcpTransformer } from '@allmaps/transform'
@@ -56,20 +55,25 @@ const mapsByImageId = await readMapsByImageId()
 
 let currentMap: CurrentMap | undefined = undefined
 
-process.stdin
-  .pipe(ndjson.parse({ strict: false }))
-  .pipe(
-    new Transform({
-      objectMode: true,
-      transform: function (ocrAnnotation: any, _, callback: TransformCallback) {
-        const features = processOcrAnnotationOrLog(ocrAnnotation)
-        features.forEach((feature) => this.push(feature))
-        callback()
-      }
-    })
-  )
-  .pipe(ndjson.stringify())
-  .pipe(process.stdout)
+pipeline(
+  process.stdin,
+  ndjson.parse({ strict: false }),
+  new Transform({
+    objectMode: true,
+    transform: function (ocrAnnotation: any, _, callback: TransformCallback) {
+      const features = processOcrAnnotationOrLog(ocrAnnotation)
+      features.forEach((feature) => this.push(feature))
+      callback()
+    }
+  }),
+  ndjson.stringify(),
+  process.stdout,
+  (err) => {
+    if (err) {
+      console.error('Error:', err)
+    }
+  }
+)
 
 function roundWithDecimals(num: number, decimals = 2) {
   const pow = 10 ** decimals
@@ -174,11 +178,6 @@ function processOcrAnnotation(annotation: OcrAnnotation) {
         }
       )
 
-      const simplifiedOcrGeojsonPolygon = turfSimplify(ocrGeojsonPolygon, {
-        tolerance: 0.00001,
-        highQuality: false
-      })
-
       const insideMapMask = turfBooleanIntersects(
         currentMap.geoMask,
         ocrGeojsonPolygon
@@ -218,7 +217,7 @@ function processOcrAnnotation(annotation: OcrAnnotation) {
               ...tippecanoe
             }
           : undefined,
-        geometry: simplifiedOcrGeojsonPolygon
+        geometry: ocrGeojsonPolygon
       }
 
       const pointFeature = {
