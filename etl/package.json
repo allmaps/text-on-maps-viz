@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "ocr-annotations": "node --no-warnings=ExperimentalWarning --experimental-strip-types ./src/ocr-annotations.ts",
-    "georeference-anotations": "node --no-warnings=ExperimentalWarning --experimental-strip-types ./src/georeference-annotations.ts",
+    "georeference-annotations": "node --no-warnings=ExperimentalWarning --experimental-strip-types ./src/georeference-annotations.ts",
     "geojson": "node --no-warnings=ExperimentalWarning --experimental-strip-types ./src/geojson.ts",
     "filter-geojson-by-layer": "node --no-warnings=ExperimentalWarning --experimental-strip-types ./src/filter-geojson-by-layer.ts",
-    "create-tippecanoe-script": "node --no-warnings=ExperimentalWarning --experimental-strip-types ./src/create-tippecanoe-script.ts > ./scripts/tippecanoe.sh"
+    "filter-geojson-by-publisher-location": "node --no-warnings=ExperimentalWarning --experimental-strip-types ./src/filter-geojson-by-publisher-location.ts",
+    "create-tippecanoe-script": "node --no-warnings=ExperimentalWarning --experimental-strip-types ./src/create-tippecanoe-script.ts"
   },
   "keywords": [],
   "author": "Bert Spaan",
