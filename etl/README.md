@@ -36,3 +36,13 @@ To summarize:
 ./scripts/tippecanoe.sh
 ./scripts/tile-join.sh
 ```
+
+## Files on Zenodo
+
+The following files are available on [Zenodo](https://zenodo.org/uploads/15316188):
+
+| Filename                                                                                                                                 | Description                                                                                                                     |
+| :--------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------ |
+| [`maps.ndjson`](https://zenodo.org/api/records/15316188/draft/files/maps.ndjson/content)                                                 | Georeference data for maps from the David Rumsey Map Collection, in the Allmaps-internal format                                 |
+| [`georeference-annotations.ndjson`](https://zenodo.org/api/records/15316188/draft/files/georeference-annotations.ndjson/content)         | The same georeference data as Georeference Annotations                                                                          |
+| [`georeference-annotations-index.json`](https://zenodo.org/api/records/15316188/draft/files/georeference-annotations-index.json/content) | JSON object containing the start and end bytes for each line in `georeference-annotations-index.json`, index by hashed image ID |
