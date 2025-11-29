@@ -1,0 +1,13 @@
+{
+  "name": "text-on-maps-viz",
+  "main": ".svelte-kit/cloudflare/_worker.js",
+  "compatibility_date": "2025-01-01",
+  "assets": { "directory": ".svelte-kit/cloudflare", "binding": "ASSETS" },
+  "vars": {},
+  "env": {
+    "dev": {
+      "name": "editor-develop",
+      "vars": {}
+    }
+  }
+}
