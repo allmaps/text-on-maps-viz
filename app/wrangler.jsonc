@@ -1,8 +1,16 @@
 {
+  "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "text-on-maps-viz",
   "main": ".svelte-kit/cloudflare/_worker.js",
   "compatibility_date": "2025-01-01",
   "assets": { "directory": ".svelte-kit/cloudflare", "binding": "ASSETS" },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "text-on-maps-viz",
+      "database_id": "8aa86756-3b59-435b-a24a-4b585a56085d"
+    }
+  ],
   "vars": {},
   "env": {
     "dev": {

@@ -1,10 +1,26 @@
-import { DatabaseSync } from 'node:sqlite'
-
 import type { RequestHandler } from './$types'
 
-const database = new DatabaseSync('../data/output/annotations.db')
+interface SearchResult {
+  id: number
+  entryId: string
+  imageId: string
+  allmapsImageId: string
+  text: string
+  listNo: string
+  pubListNo: string
+  publisherLocation: string
+  insideMapMask: number
+  mapArea: number
+  bbox: string | null
+  rank: number
+}
 
-export const GET: RequestHandler = ({ url }) => {
+export const GET: RequestHandler = async ({ url, platform }) => {
+  const db = platform?.env?.DB
+  if (!db) {
+    return new Response(JSON.stringify({ error: 'Database not available' }), { status: 500 })
+  }
+
   const query = (url.searchParams.get('query') || '') + '*'
   const pubListNosParam = url.searchParams.get('pubListNos') || ''
   const pubListNos = pubListNosParam ? pubListNosParam.split(',') : []
@@ -15,7 +31,7 @@ export const GET: RequestHandler = ({ url }) => {
 
   // Build dynamic query with placeholders for pubListNos
   const placeholders = pubListNos.map(() => '?').join(', ')
-  const searchText = database.prepare(`
+  const sql = `
     SELECT
       a.id,
       a.entryId,
@@ -35,14 +51,16 @@ export const GET: RequestHandler = ({ url }) => {
       AND a.pubListNo IN (${placeholders})
     ORDER BY rank
     LIMIT 100
-  `)
+  `
 
-  const results = searchText.all(query, ...pubListNos)
+  const { results } = await db.prepare(sql).bind(query, ...pubListNos).all<SearchResult>()
+
   return new Response(
     JSON.stringify(
       results.map((result) => ({
         ...result,
-        bbox: result.bbox && typeof result.bbox === 'string' ? JSON.parse(result.bbox) : undefined
+        bbox:
+          result.bbox && typeof result.bbox === 'string' ? JSON.parse(result.bbox) : undefined
       }))
     )
   )
