@@ -2,13 +2,15 @@
   import { getFeaturesState } from '$lib/state/features.svelte'
   import ResultItem from '$lib/components/ResultItem.svelte'
 
-  interface ColorConfig {
+  type ColorConfig = {
     pubListNo: string
     color: string
     textColor: string
   }
 
-  let { colors = [] }: { colors: ColorConfig[] } = $props()
+  type Props = { colors: ColorConfig[]; allmapsImageId: string | undefined }
+
+  let { colors = [], allmapsImageId = $bindable<string | undefined>() }: Props = $props()
 
   const featuresState = getFeaturesState()
 </script>
@@ -22,6 +24,7 @@
       {#each featuresState.features as feature}
         <li>
           <ResultItem
+            bind:allmapsImageId
             result={{
               text: feature.properties.text,
               pubListNo: feature.properties.pubListNo,

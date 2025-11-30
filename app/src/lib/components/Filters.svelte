@@ -4,7 +4,9 @@
   const MIN_YEAR = 1756
   const MAX_YEAR = 1953
 
-  let { yearRange = $bindable<[number, number]>([MIN_YEAR, MAX_YEAR]) } = $props()
+  type Props = { yearRange: [number, number] }
+
+  let { yearRange = $bindable<[number, number]>([MIN_YEAR, MAX_YEAR]) }: Props = $props()
 </script>
 
 <div class="flex flex-col gap-2 p-2">

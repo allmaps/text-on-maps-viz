@@ -10,7 +10,6 @@
   import Sidebar from '$lib/components/Sidebar.svelte'
 
   import { getFeaturesState } from '$lib/state/features.svelte.js'
-  import { getWarpedMapState } from '$lib/state/warped-map.svelte.js'
 
   import type { ExpressionSpecification, LngLatBoundsLike } from 'maplibre-gl'
 
@@ -33,7 +32,6 @@
   }
 
   const featuresState = getFeaturesState()
-  const warpedMapState = getWarpedMapState()
 
   type BasemapStyle = 'default' | 'labels' | 'none'
 
@@ -41,6 +39,7 @@
   let collections = $state<Collection[]>([])
   let yearRange = $state<[number, number]>([1756, 1953])
   let basemapStyle = $state<BasemapStyle>('default')
+  let allmapsImageId = $state<string>()
 
   // Carto basemap label layer IDs to toggle
   const labelLayerIds = [
@@ -87,9 +86,8 @@
   }
 
   // const pmtilesUrl = 'http://127.0.0.1:8080/ocr.fantastic-futures.pmtiles'
-
   const pmtilesUrl =
-    'https://zenodo.org/api/records/15316188/draft/files/ocr.fantastic-futures.pmtiles/content'
+    'https://pub-2f61d04756924d018146a9d59ae531ee.r2.dev/ocr.fantastic-futures.pmtiles'
 
   let container: HTMLElement
   let map: Map
@@ -134,18 +132,15 @@
     }
   ]
 
-  // $: {
-  //   if (layersAdded) {
-  //     map.setFilter('masks', getFilters(maxAreaSqrt ** 2))
-  //     updateFeatures()
-  //   }
-  // }
-
-  onMount(async () => {
+  async function fetchCollections() {
     // Fetch collections from API
     const res = await fetch('/api/collections')
-    const data = await res.json()
+    const data = (await res.json()) as Collection[]
     collections = data.map((c: Omit<Collection, 'enabled'>) => ({ ...c, enabled: true }))
+  }
+
+  onMount(async () => {
+    fetchCollections()
 
     const protocol = new Protocol()
     addProtocol('pmtiles', protocol.tile)
@@ -277,10 +272,19 @@
     })
   })
 
-  $effect(() => {
-    if (mapLoaded && warpedMapState.georeferencedMap) {
+  async function showGeoreferencedMap(allmapsImageId: string) {
+    if (warpedMapLayer) {
+      const georeferencedMapUrl = `api/annotations/images/${allmapsImageId}`
+      const georeferencedMap = await fetch(georeferencedMapUrl).then((response) => response.json())
+
       warpedMapLayer.clear()
-      warpedMapLayer.addGeoreferencedMap(warpedMapState.georeferencedMap)
+      await warpedMapLayer.addGeoreferencedMap(georeferencedMap)
+    }
+  }
+
+  $effect(() => {
+    if (mapLoaded && allmapsImageId) {
+      showGeoreferencedMap(allmapsImageId)
     }
   })
 
@@ -352,5 +356,12 @@
 
 <div class="absolute flex h-full w-full flex-row">
   <div class="w-full bg-black" bind:this={container}></div>
-  <Sidebar bind:collections bind:yearRange bind:basemapStyle {fitBounds} {colors} />
+  <Sidebar
+    bind:allmapsImageId
+    bind:collections
+    bind:yearRange
+    bind:basemapStyle
+    {fitBounds}
+    {colors}
+  />
 </div>

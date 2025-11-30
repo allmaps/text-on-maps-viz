@@ -3,13 +3,20 @@
 
   type BasemapStyle = 'default' | 'labels' | 'none'
 
-  const basemapOptions: { value: BasemapStyle; label: string }[] = [
+  type BasemapOptions = {
+    value: BasemapStyle
+    label: string
+  }
+
+  const basemapOptions: BasemapOptions[] = [
     { value: 'default', label: 'Default (no labels)' },
     { value: 'labels', label: 'With labels' },
     { value: 'none', label: 'No basemap (black)' }
   ]
 
-  let { basemapStyle = $bindable<BasemapStyle>('default') } = $props()
+  type Props = { basemapStyle: BasemapStyle }
+
+  let { basemapStyle = $bindable<BasemapStyle>('default') }: Props = $props()
 
   function getLabel(value: string): string {
     return basemapOptions.find((o) => o.value === value)?.label ?? value

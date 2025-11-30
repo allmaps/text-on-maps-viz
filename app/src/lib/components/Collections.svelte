@@ -1,33 +1,32 @@
 <script lang="ts">
   import type { GeoreferencedMap } from '@allmaps/annotation'
 
-  interface CollectionMap {
+  type CollectionMap = {
     pubListNo: string
     listNo: string
     allmapsImageId: string
     map: GeoreferencedMap
   }
 
-  interface Collection {
+  type Collection = {
     title: string
     pubListNo: string
     maps: CollectionMap[]
     enabled: boolean
   }
 
-  interface ColorConfig {
+  type ColorConfig = {
     pubListNo: string
     color: string
     textColor: string
   }
 
-  let {
-    collections = $bindable<Collection[]>([]),
-    colors = []
-  }: {
+  type Props = {
     collections: Collection[]
     colors: ColorConfig[]
-  } = $props()
+  }
+
+  let { collections = $bindable<Collection[]>([]), colors = [] }: Props = $props()
 
   function toggleCollection(index: number) {
     collections[index].enabled = !collections[index].enabled

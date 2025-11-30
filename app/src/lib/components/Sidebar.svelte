@@ -30,24 +30,28 @@
     textColor: string
   }
 
-  let {
-    collections = $bindable<Collection[]>([]),
-    yearRange = $bindable<[number, number]>([1756, 1953]),
-    basemapStyle = $bindable<BasemapStyle>('default'),
-    fitBounds,
-    colors = []
-  }: {
+  type Props = {
     collections: Collection[]
     yearRange: [number, number]
     basemapStyle: BasemapStyle
     fitBounds: (bounds: LngLatBoundsLike) => void
     colors: ColorConfig[]
-  } = $props()
+    allmapsImageId: string | undefined
+  }
+
+  let {
+    collections = $bindable<Collection[]>([]),
+    yearRange = $bindable<[number, number]>([1756, 1953]),
+    basemapStyle = $bindable<BasemapStyle>('default'),
+    fitBounds,
+    colors = [],
+    allmapsImageId = $bindable<string | undefined>()
+  }: Props = $props()
 </script>
 
 <aside class="w-sm flex flex-col overflow-y-auto bg-white">
-  <Selected {colors} />
-  <Search {fitBounds} {colors} {collections} />
+  <Selected {colors} bind:allmapsImageId />
+  <Search {fitBounds} {colors} {collections} bind:allmapsImageId />
   <Collections bind:collections {colors} />
   <Filters bind:yearRange />
   <Options bind:basemapStyle />

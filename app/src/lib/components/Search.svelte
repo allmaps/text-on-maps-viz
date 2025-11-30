@@ -4,7 +4,7 @@
 
   import type { GeoreferencedMap } from '@allmaps/annotation'
 
-  interface SearchResult {
+  type SearchResult = {
     id: string
     entryId: string
     imageId: string
@@ -19,35 +19,39 @@
     rank: number
   }
 
-  interface ColorConfig {
+  type ColorConfig = {
     pubListNo: string
     color: string
     textColor: string
   }
 
-  interface CollectionMap {
+  type CollectionMap = {
     pubListNo: string
     listNo: string
     allmapsImageId: string
     map: GeoreferencedMap
   }
 
-  interface Collection {
+  type Collection = {
     title: string
     pubListNo: string
     maps: CollectionMap[]
     enabled: boolean
   }
 
-  let {
-    fitBounds,
-    colors = [],
-    collections = []
-  }: {
+  type Props = {
     fitBounds: (bounds: LngLatBoundsLike) => void
     colors: ColorConfig[]
     collections: Collection[]
-  } = $props()
+    allmapsImageId: string | undefined
+  }
+
+  let {
+    fitBounds,
+    colors = [],
+    collections = [],
+    allmapsImageId = $bindable<string | undefined>()
+  }: Props = $props()
 
   let query = $state('')
   let results = $state<SearchResult[]>([])
@@ -105,7 +109,7 @@
     <ul class="flex max-h-64 flex-col gap-1 overflow-y-auto">
       {#each results as result}
         <li>
-          <ResultItem {result} {colors} {fitBounds} />
+          <ResultItem {result} {colors} {fitBounds} bind:allmapsImageId />
         </li>
       {/each}
     </ul>

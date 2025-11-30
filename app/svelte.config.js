@@ -10,9 +10,8 @@ const config = {
     adapter: adapter({
       platformProxy: {
         configPath: './wrangler.jsonc',
-        persist: { path: '.wrangler/state' },
-        experimentalJsonConfig: true,
-        d1Databases: useRemoteD1 ? { DB: 'remote' } : undefined
+        persist: { path: '.wrangler/state/v3' }
+        // d1Databases: useRemoteD1 ? { DB: 'remote' } : undefined
       }
     })
   }

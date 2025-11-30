@@ -1,38 +1,39 @@
 <script lang="ts">
   import type { LngLatBoundsLike } from 'maplibre-gl'
-  import { getWarpedMapState } from '$lib/state/warped-map.svelte'
 
-  interface ColorConfig {
+  type ColorConfig = {
     pubListNo: string
     color: string
     textColor: string
   }
 
-  interface ResultData {
+  type ResultData = {
     text: string
     pubListNo: string
     allmapsImageId: string
     bbox?: [number, number, number, number] | null
   }
 
-  let {
-    result,
-    colors = [],
-    fitBounds
-  }: {
+  type Props = {
     result: ResultData
     colors: ColorConfig[]
     fitBounds?: (bounds: LngLatBoundsLike) => void
-  } = $props()
+    allmapsImageId: string | undefined
+  }
 
-  const warpedMapState = getWarpedMapState()
+  let {
+    result,
+    colors = [],
+    fitBounds,
+    allmapsImageId = $bindable<string | undefined>()
+  }: Props = $props()
 
   function getColor(pubListNo: string): string {
     return colors.find((c) => c.pubListNo === pubListNo)?.color ?? '#999'
   }
 
   function showWarpedMap() {
-    warpedMapState.allmapsImageId = result.allmapsImageId
+    allmapsImageId = result.allmapsImageId
   }
 
   function goToLocation() {
