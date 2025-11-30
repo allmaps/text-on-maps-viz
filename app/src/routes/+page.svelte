@@ -86,8 +86,10 @@
     labelsVisible = visible
   }
 
-  const pmtilesUrl = 'http://127.0.0.1:8080/ocr.fantastic-futures.pmtiles'
-  // const pmtilesUrl = 'https://zenodo.org/api/records/15316188/draft/files/ocr.pmfiles/content'
+  // const pmtilesUrl = 'http://127.0.0.1:8080/ocr.fantastic-futures.pmtiles'
+
+  const pmtilesUrl =
+    'https://zenodo.org/api/records/15316188/draft/files/ocr.fantastic-futures.pmtiles/content'
 
   let container: HTMLElement
   let map: Map
