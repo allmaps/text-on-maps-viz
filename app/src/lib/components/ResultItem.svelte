@@ -33,10 +33,10 @@
   }
 
   function togglewWarpedMap() {
-    if (!allmapsImageId) {
-      allmapsImageId = result.allmapsImageId
-    } else {
+    if (allmapsImageId === result.allmapsImageId) {
       allmapsImageId = undefined
+    } else {
+      allmapsImageId = result.allmapsImageId
     }
   }
 
@@ -72,10 +72,10 @@
       class="cursor-pointer rounded px-2 py-0.5 text-xs text-white shadow"
       style="background-color: {getColor(result.pubListNo)}"
     >
-      {#if !allmapsImageId}
-        Show map
-      {:else}
+      {#if allmapsImageId === result.allmapsImageId}
         Hide map
+      {:else}
+        Show map
       {/if}
     </button>
   </div>
