@@ -85,6 +85,14 @@
     labelsVisible = visible
   }
 
+  function toggleTextLabelLayer(visible: boolean) {
+    if (!map) return
+    const visibility = visible ? 'visible' : 'none'
+    if (map.getLayer('ocr-lines-label')) {
+      map.setLayoutProperty('ocr-lines-label', 'visibility', visibility)
+    }
+  }
+
   // const pmtilesUrl = 'http://127.0.0.1:8080/ocr.fantastic-futures.pmtiles'
   const pmtilesUrl =
     'https://pub-2f61d04756924d018146a9d59ae531ee.r2.dev/ocr.fantastic-futures.pmtiles'
@@ -354,7 +362,24 @@
       toggleLabelLayers(basemapStyle === 'labels')
     }
   })
+
+  function handleKeyDown(event: KeyboardEvent) {
+    if (event.code !== 'Space') return
+    const target = event.target as HTMLElement
+    if (target.tagName === 'BUTTON' || target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return
+    event.preventDefault()
+    toggleTextLabelLayer(false)
+  }
+
+  function handleKeyUp(event: KeyboardEvent) {
+    if (event.code !== 'Space') return
+    const target = event.target as HTMLElement
+    if (target.tagName === 'BUTTON' || target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return
+    toggleTextLabelLayer(true)
+  }
 </script>
+
+<svelte:body onkeydown={handleKeyDown} onkeyup={handleKeyUp} />
 
 <div class="absolute flex h-full w-full flex-row">
   <div class="w-full bg-black" bind:this={container}></div>
