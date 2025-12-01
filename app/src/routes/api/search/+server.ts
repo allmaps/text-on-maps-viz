@@ -25,13 +25,12 @@ export const GET: RequestHandler = async ({ url, platform }) => {
   const pubListNosParam = url.searchParams.get('pubListNos') || ''
   const pubListNos = pubListNosParam ? pubListNosParam.split(',') : []
 
-  if (pubListNos.length === 0) {
-    return new Response(JSON.stringify([]))
-  }
+  let results: SearchResult[]
 
-  // Build dynamic query with placeholders for pubListNos
-  const placeholders = pubListNos.map(() => '?').join(', ')
-  const sql = `
+  if (pubListNos.length) {
+    // Build dynamic query with placeholders for pubListNos
+    const placeholders = pubListNos.map(() => '?').join(', ')
+    const sql = `
     SELECT
       a.id,
       a.entryId,
@@ -53,14 +52,44 @@ export const GET: RequestHandler = async ({ url, platform }) => {
     LIMIT 100
   `
 
-  const { results } = await db.prepare(sql).bind(query, ...pubListNos).all<SearchResult>()
+    const d1Result = await db
+      .prepare(sql)
+      .bind(query, ...pubListNos)
+      .all<SearchResult>()
+
+    results = d1Result.results
+  } else {
+    const sql = `
+    SELECT
+      a.id,
+      a.entryId,
+      a.imageId,
+      a.allmapsImageId,
+      a.text,
+      a.listNo,
+      a.pubListNo,
+      a.publisherLocation,
+      a.insideMapMask,
+      a.mapArea,
+      json(a.bbox) as bbox,
+      fts.rank
+    FROM annotations_fts fts
+    JOIN annotations a ON a.rowid = fts.rowid
+    WHERE annotations_fts MATCH ?
+    ORDER BY rank
+    LIMIT 100
+  `
+
+    const d1Result = await db.prepare(sql).bind(query).all<SearchResult>()
+
+    results = d1Result.results
+  }
 
   return new Response(
     JSON.stringify(
       results.map((result) => ({
         ...result,
-        bbox:
-          result.bbox && typeof result.bbox === 'string' ? JSON.parse(result.bbox) : undefined
+        bbox: result.bbox && typeof result.bbox === 'string' ? JSON.parse(result.bbox) : undefined
       }))
     )
   )
