@@ -32,8 +32,12 @@
     return colors.find((c) => c.pubListNo === pubListNo)?.color ?? '#999'
   }
 
-  function showWarpedMap() {
-    allmapsImageId = result.allmapsImageId
+  function togglewWarpedMap() {
+    if (!allmapsImageId) {
+      allmapsImageId = result.allmapsImageId
+    } else {
+      allmapsImageId = undefined
+    }
   }
 
   function goToLocation() {
@@ -64,11 +68,15 @@
       </button>
     {/if}
     <button
-      onclick={showWarpedMap}
+      onclick={togglewWarpedMap}
       class="cursor-pointer rounded px-2 py-0.5 text-xs text-white shadow"
       style="background-color: {getColor(result.pubListNo)}"
     >
-      Show map
+      {#if !allmapsImageId}
+        Show map
+      {:else}
+        Hide map
+      {/if}
     </button>
   </div>
 </div>

@@ -285,6 +285,8 @@
   $effect(() => {
     if (mapLoaded && allmapsImageId) {
       showGeoreferencedMap(allmapsImageId)
+    } else if (mapLoaded) {
+      warpedMapLayer.clear()
     }
   })
 
