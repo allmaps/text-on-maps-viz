@@ -363,23 +363,20 @@
     }
   })
 
+  let textLabelsVisible = $state(true)
+
   function handleKeyDown(event: KeyboardEvent) {
     if (event.code !== 'Space') return
     const target = event.target as HTMLElement
-    if (target.tagName === 'BUTTON' || target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return
+    if (target.tagName === 'BUTTON' || target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')
+      return
     event.preventDefault()
-    toggleTextLabelLayer(false)
-  }
-
-  function handleKeyUp(event: KeyboardEvent) {
-    if (event.code !== 'Space') return
-    const target = event.target as HTMLElement
-    if (target.tagName === 'BUTTON' || target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return
-    toggleTextLabelLayer(true)
+    textLabelsVisible = !textLabelsVisible
+    toggleTextLabelLayer(textLabelsVisible)
   }
 </script>
 
-<svelte:body onkeydown={handleKeyDown} onkeyup={handleKeyUp} />
+<svelte:body onkeydown={handleKeyDown} />
 
 <div class="absolute flex h-full w-full flex-row">
   <div class="w-full bg-black" bind:this={container}></div>
