@@ -50,6 +50,7 @@
     "bits-ui": "^2.14.4",
     "jsonc-parser": "^3.3.1",
     "maplibre-gl": "5.9.0",
+    "phosphor-svelte": "^3.0.1",
     "pmtiles": "^4.3.0"
   }
 }

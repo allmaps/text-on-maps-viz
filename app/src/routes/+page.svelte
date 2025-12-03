@@ -8,6 +8,7 @@
   import { pink, orange, blue, green, purple, red, shades } from '@allmaps/tailwind'
 
   import Sidebar from '$lib/components/Sidebar.svelte'
+  import About from '$lib/components/About.svelte'
 
   import { getFeaturesState } from '$lib/state/features.svelte.js'
 
@@ -73,6 +74,7 @@
   ]
 
   let labelsVisible = $state(false)
+  let showAbout = $state(false)
 
   function toggleLabelLayers(visible: boolean) {
     if (!map) return
@@ -385,7 +387,9 @@
     bind:collections
     bind:yearRange
     bind:basemapStyle
+    bind:showAbout
     {fitBounds}
     {colors}
   />
+  <About bind:open={showAbout} />
 </div>

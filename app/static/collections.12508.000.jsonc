@@ -1,24 +1,5 @@
 [
   {
-    "pubListNo": "11486.000",
-    "title": "Descriptive map of London poverty 1889",
-    "listNos": ["11486.006", "11486.009"]
-  },
-  {
-    "pubListNo": "13422.000",
-    "title": "Carte de la France (1852-77)",
-    "listNos": ["13422.004", "13422.035"]
-  },
-  {
-    "pubListNo": "5694.000",
-    "title": "Carte de France (Cassini) (1750-1815)",
-    "listNos": ["5694.019", "5694.199"]
-  },
-  {
-    "pubListNo": "5850.000",
-    "title": "SF Sanborns (1905)"
-  },
-  {
     "pubListNo": "12508.000",
     "title": "Real Estate atlas of American and Canadian cities",
     "listNos": [
@@ -42,10 +23,5 @@
       ["12508.134", "12508.138"],
       ["12508.140", "12508.145"]
     ]
-  },
-  {
-    "pubListNo": "2467.000",
-    "title": "18th c. American road map",
-    "listNos": ["2467.001", "2467.066"]
   }
 ]

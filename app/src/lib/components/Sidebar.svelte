@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { page } from '$app/state'
+
   import Collections from '$lib/components/Collections.svelte'
   import Filters from '$lib/components/Filters.svelte'
   import Options from '$lib/components/Options.svelte'
@@ -37,6 +39,7 @@
     fitBounds: (bounds: LngLatBoundsLike) => void
     colors: ColorConfig[]
     allmapsImageId: string | undefined
+    showAbout: boolean
   }
 
   let {
@@ -45,11 +48,17 @@
     basemapStyle = $bindable<BasemapStyle>('default'),
     fitBounds,
     colors = [],
-    allmapsImageId = $bindable<string | undefined>()
+    allmapsImageId = $bindable<string | undefined>(),
+    showAbout = $bindable<boolean>(false)
   }: Props = $props()
 </script>
 
 <aside class="w-sm flex flex-col overflow-y-auto bg-white">
+  <div class="flex flex-row justify-between gap-2 p-2">
+    <h1 class="text-2xl font-bold">Text on Maps</h1>
+    <button onclick={() => (showAbout = true)} class="cursor-pointer underline">About</button>
+  </div>
+
   <Selected {colors} bind:allmapsImageId />
   <Search {fitBounds} {colors} {collections} bind:allmapsImageId />
   <Collections bind:collections {colors} />
