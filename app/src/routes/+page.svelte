@@ -380,8 +380,8 @@
 
 <svelte:body onkeydown={handleKeyDown} />
 
-<div class="absolute flex h-full w-full flex-row">
-  <div class="w-full bg-black" bind:this={container}></div>
+<div class="absolute flex h-full w-full flex-col sm:flex-row">
+  <div class="h-full w-full bg-black" bind:this={container}></div>
   <Sidebar
     bind:allmapsImageId
     bind:collections

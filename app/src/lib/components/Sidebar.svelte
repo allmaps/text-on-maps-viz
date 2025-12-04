@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { page } from '$app/state'
-
   import Collections from '$lib/components/Collections.svelte'
   import Filters from '$lib/components/Filters.svelte'
   import Options from '$lib/components/Options.svelte'
@@ -53,7 +51,7 @@
   }: Props = $props()
 </script>
 
-<aside class="w-sm flex flex-col overflow-y-auto bg-white">
+<aside class="sm:w-xs flex h-1/2 w-full shrink-0 flex-col overflow-y-auto bg-white sm:h-full">
   <div class="flex flex-row justify-between gap-2 p-2">
     <h1 class="text-2xl font-bold">Text on Maps</h1>
     <button onclick={() => (showAbout = true)} class="cursor-pointer underline">About</button>
