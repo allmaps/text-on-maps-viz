@@ -23,7 +23,8 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 
   const query = (url.searchParams.get('query') || '') + '*'
   const pubListNosParam = url.searchParams.get('pubListNos') || ''
-  const pubListNos = pubListNosParam ? pubListNosParam.split(',') : []
+  // TODO: for now, disable this. causes 500 error. will fix soon!!!!
+  const pubListNos: string[] = [] // pubListNosParam ? pubListNosParam.split(',') : []
 
   let results: SearchResult[]
 
