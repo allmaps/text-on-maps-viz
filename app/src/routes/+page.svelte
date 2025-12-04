@@ -288,7 +288,9 @@
       const georeferencedMap = await fetch(georeferencedMapUrl).then((response) => response.json())
 
       warpedMapLayer.clear()
-      await warpedMapLayer.addGeoreferencedMap(georeferencedMap)
+      await warpedMapLayer.addGeoreferencedMap(georeferencedMap, {
+        applyMask: false
+      })
     }
   }
 
