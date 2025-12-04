@@ -289,7 +289,7 @@
 
       warpedMapLayer.clear()
       await warpedMapLayer.addGeoreferencedMap(georeferencedMap, {
-        applyMask: false
+        // applyMask: false
       })
     }
   }
