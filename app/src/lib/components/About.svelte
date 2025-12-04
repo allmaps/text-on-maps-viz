@@ -38,7 +38,13 @@
       </p>
 
       <ul class="list-disc pl-6">
-        <li>Carte de France (Cassini) (1750-1815)</li>
+        <li>
+          <a
+            class="underline"
+            href="https://www.davidrumsey.com/luna/servlet/view/search?q=pub_list_no%3d%225694.000%22&mi=0&qvq=sort:pub_list_no_initialsort%2Cpub_date%2Cpub_list_no%2Cseries_no;lc:RUMSEY~8~1"
+            >Carte de France (Cassini) (1750-1815)</a
+          >
+        </li>
         <li>
           <a
             class="underline"
